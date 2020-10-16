@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0 0 100px 0;
+        }
+
+        .divButton, .divButton2 {
+            background-color: aquamarine;
+            margin-top: 10px;
+            margin-right: 5px;
+            padding: 10px 30px;
+            width: max-content;
+            border-radius: 15px;
+            color: brown;
+        }
+
+        .divButton {
+            float: left;
+        }
+
+        .divButton:hover {
+            background-color: beige;
+        }
+
+        table:not(.form) tr:nth-child(odd) {
+            background-color: beige;
+        }
+
+        table:not(.form) tr:nth-child(even) {
+            background-color: burlywood;
+        }
+
+        table:not(.form) tr:first-child {
+            background-color: cadetblue;
+        }
+
+        .divContainer {
+            height: 50px;
+        }
+
+        .divContainer2 {
+            border: 1px dotted black;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+    <link rel="stylesheet" href="./style.css">
+
+    <script src="./script.js" defer></script>
+</head>
+<body>
+    <h1>Registrasi</h1>
+    <form name="form1">
+        <table cellpadding="5px" class="form">
+            <tr>
+                <td>Nama</td>
+                <td>:</td>
+                <td><input type="text" name="nama" id="inputNama"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>:</td>
+                <td><input type="email" name="email"></td>
+            </tr>
+            <tr>
+                <td>Jenis Kelamin</td>
+                <td>:</td>
+                <td>
+                    <input type="radio" name="jk"> Pria
+                    <input type="radio" name="jk"> Wanita
+                </td>
+            </tr>
+            <tr>
+                <td>Kota</td>
+                <td>:</td>
+                <td>
+                    <select name="" id="">
+                        <option value="">--- Silakan Pilih ---</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Bandung">Bandung</option>
+                        <option value="Bogor">Bogor</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>:</td>
+                <td>
+                    <textarea name="" id="" cols="20" rows="2"></textarea>
+                </td>
+            </tr>
+            <tr align="center">
+                <td colspan="3">
+                    <input type="reset" value="Reset">
+                    <input type="submit" value="Simpan">
+                    <input type="button" value="Button" onclick="showData()">
+                    
+                    <div class="divContainer">
+                        <div class="divButton">button div1</div>
+                        <div class="divButton">button div2</div>
+                    </div>
+                    
+                    <div class="divContainer2">
+                        <div class="divButton2" style="flex: 1;">div1</div>
+                        <div class="divButton2">div2</div>
+                        <div class="divButton2">div2</div>
+                        <div class="divButton2">div2</div>
+                        <div class="divButton2">div2</div>
+                        <div class="divButton2">div2</div>
+                        <div class="divButton2">div2</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <hr>
+    <table width=100% border=1 class="tableData">
+        <tr>
+            <th style="width: 20px;">No</th>
+            <th>Nama</th>
+            <th>Umur</th>
+        </tr>
+        <!-- <tr>
+            <td align=center>1</td>
+            <td>
+                Admin
+            </td>
+            <td align="center">
+                <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png">
+                    <img height="50px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png" alt="Admin" >
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td align=center>2</td>
+            <td>
+                Administrator
+            </td>
+            <td align="center">
+                <a href="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg">
+                    <img height="50px" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" alt="">
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td align=center>3</td>
+            <td>
+                User
+            </td>
+            <td align="center">
+                <a href="https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg">
+                    <img height="50px" src="https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg" alt="">
+                </a>
+            </td>
+        </tr> -->
+    </table>
+
+    <div id="div1"></div>
+</body>
+</html>
