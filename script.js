@@ -155,6 +155,7 @@ function showData() {
         //     "</tr>"
 
         if (index == 1) {
+            // DOM Manipulation
             console.log(document.getElementById("inputNama").value);
             var inputNama = document.form1.nama
             console.log(inputNama.value);
@@ -170,17 +171,18 @@ function showData() {
             </tr>
         `
     }
+    // DOM manipulation
     tableData.innerHTML = tr
 }
 
 var no = 1
-var status = true
-while (status) {
+var status1 = true
+while (status1) {
     console.log("no: ", no);
-    console.log("status: ", status);
+    console.log("status: ", status1);
 
     if (no == 10) {
-        break
+        status1 = false
     }
 
     no += 1
