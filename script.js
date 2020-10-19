@@ -123,10 +123,11 @@ switch (nama) {
 
 
 // looping
-function showData() {
+function showData(e) {
+    e.preventDefault();
     var tableData = document.getElementsByClassName("tableData")[0]
-    // console.log(tableData.children[0].children[0].outerHTML);
-    var tr = tableData.children[0].children[0].outerHTML
+    // console.log(tableData.firstElementChild.firstChild.outerHTML);
+    var tr = tableData.firstElementChild.firstChild.outerHTML
     for (index = 0; index < listUser.length; index++) {
         // continue
         // break
@@ -174,6 +175,7 @@ function showData() {
     // DOM manipulation
     tableData.innerHTML = tr
 }
+// showData()
 
 var no = 1
 var status1 = true
@@ -206,8 +208,18 @@ console.log(tambah1);
 var tambah2 = tambah2an(20, tambah1)
 tambah2an(30, tambah2)
 
+document.getElementById("div1").style.backgroundColor = "grey"
+
+function divButton(value) {
+    document.getElementById("div1").style.display = value
+}
+
 /*
     Latihan:
-    - tampilkan data yang diinput oleh halaman pendaftaran dibawah form pendaftaran
+    - tampilkan data yang diinput oleh halaman pendaftaran kalo sudah login
     - data tersebut harus bisa ubah data & hapus data
+
+    Tugas:
+    - update web menjadi 1 file html
+    - data yang sudah di register, harus bisa login
 */

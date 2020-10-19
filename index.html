@@ -56,7 +56,7 @@
 </head>
 <body>
     <h1>Registrasi</h1>
-    <form name="form1">
+    <form name="form1" onsubmit="showData(event)">
         <table cellpadding="5px" class="form">
             <tr>
                 <td>Nama</td>
@@ -102,8 +102,8 @@
                     <input type="button" value="Button" onclick="showData()">
                     
                     <div class="divContainer">
-                        <div class="divButton">button div1</div>
-                        <div class="divButton">button div2</div>
+                        <div class="divButton" onclick="divButton('none')">button div1</div>
+                        <div class="divButton" onclick="divButton('block')">button div2</div>
                     </div>
                     
                     <div class="divContainer2">
@@ -126,7 +126,7 @@
             <th>Nama</th>
             <th>Umur</th>
         </tr>
-        <!-- <tr>
+        <tr>
             <td align=center>1</td>
             <td>
                 Admin
@@ -158,9 +158,10 @@
                     <img height="50px" src="https://cdn.jpegmini.com/user/images/slider_puffin_before_mobile.jpg" alt="">
                 </a>
             </td>
-        </tr> -->
+        </tr>
     </table>
 
-    <div id="div1"></div>
+    <div id="div1">asdf</div>
+    <div id="div2">asdf 2</div>
 </body>
 </html>
