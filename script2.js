@@ -3,7 +3,20 @@ var userLogin = {},
         name: "admin",
         email: "admin@admin.com",
         password: "admin",
-        gender: "L"
+        gender: "L",
+        age: 21
+    }, {
+        name: "admin1",
+        email: "admin1@admin.com",
+        password: "admin1",
+        gender: "P",
+        age: 22
+    }, {
+        name: "admin2",
+        email: "admin2@admin.com",
+        password: "admin2",
+        gender: "L",
+        age: 23
     }]
 
 var getAll = function (attr) {
@@ -33,6 +46,7 @@ var showPage = function (target) {
     menu.classList.add("active")
     page.classList.add("active")
 
+    // if (cb) cb()
     if (target == "home") renderHome()
 }
 
@@ -197,3 +211,48 @@ var init = function () {
 }
 
 init()
+
+
+function a(param1, param2, cb) {
+    let s = param1 + param2
+    // logic
+    return cb(s, param2)
+    // return param1 + param2
+}
+
+
+var c = (param1, param2) => {
+    return param1 + param2
+}
+
+
+const result = userList.filter((val, idx) => val.gender == "P")
+console.warn(result)
+
+const resultMap = userList.map((val, idx) => {
+    if (val.name == "admin") {
+        return "admin"
+    }
+
+    return {
+        name: val.name,
+        gender: val.gender == "L" ? "Laki-laki" : "Perempuan",
+        email: val.email + ".com"
+    }
+})
+console.log(resultMap);
+
+const resultRed = userList.reduce((ret, data) => ret + data.age, 0)
+console.log(resultRed);
+
+let total = 0
+userList.forEach(val => {
+    console.warn(val)
+    total += val.age
+})
+console.log(total);
+
+/*
+    Tugas:
+        - Ganti metode2 yang kalian gunakan (for) menggunakan reduce/filter/map/find
+*/
