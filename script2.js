@@ -1,23 +1,24 @@
 var userLogin = {},
-    userList = [{
-        name: "admin",
-        email: "admin@admin.com",
-        password: "admin",
-        gender: "L",
-        age: 21
-    }, {
-        name: "admin1",
-        email: "admin1@admin.com",
-        password: "admin1",
-        gender: "P",
-        age: 22
-    }, {
-        name: "admin2",
-        email: "admin2@admin.com",
-        password: "admin2",
-        gender: "L",
-        age: 23
-    }]
+    userList = []
+// userList = [{
+//     name: "admin",
+//     email: "admin@admin.com",
+//     password: "admin",
+//     gender: "L",
+//     age: 21
+// }, {
+//     name: "admin1",
+//     email: "admin1@admin.com",
+//     password: "admin1",
+//     gender: "P",
+//     age: 22
+// }, {
+//     name: "admin2",
+//     email: "admin2@admin.com",
+//     password: "admin2",
+//     gender: "L",
+//     age: 23
+// }]
 
 var getAll = function (attr) {
     return document.querySelectorAll(attr)
@@ -102,18 +103,21 @@ var doLogin = function () {
     var password = form.password.value
 
     if (email && password) {
-        var statusLogin = false
-        for (let index = 0; index < userList.length; index++) {
-            var user = userList[index];
+        var userLogin = userList.find(user => (email == user.email && password == user.password))
+        // var statusLogin = userList.some(user => (email == user.email && password == user.password))
+        // for (let index = 0; index < userList.length; index++) {
+        //     var user = userList[index];
 
-            if (email == user.email && password == user.password) {
-                statusLogin = true
-                userLogin = user
-                break
-            }
-        }
+        //     if (email == user.email && password == user.password) {
+        //         statusLogin = true
+        //         userLogin = user
+        //         break
+        //     }
+        // }
 
-        if (statusLogin) {
+        console.log("filter: ", userLogin);
+
+        if (userLogin) {
             alert("Sukses login!!\nHai " + userLogin.name)
             form.reset()
             afterLogin()
@@ -136,28 +140,40 @@ var doLogout = function () {
     get(".navbar-list[content='masuk']").classList.remove("hidden")
 }
 
-var renderHome = function () {
+var renderHome = async function () {
     var tableUsers = get("table[data='user']")
     var newTR = get("table[data='user'] tr").innerHTML
 
-    for (let index = 0; index < userList.length; index++) {
-        var user = userList[index];
+    console.log("atas fetch");
+    await fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(data => {
+            userList = data
+            console.log("dalam then");
+        })
+        .catch(err => console.warn("err: ", err))
+        .finally(() => console.info("finally..."))
 
-        newTR += `
-            <tr>
-                <td align="right">${index + 1}</td>
-                <td>${user.name}</td>
-                <td>
-                    ${(user.gender == "L") ? "Laki-laki" : (user.gender == "P" ? "Perempuan" : "")}
-                </td>
-                <td align="center">
-                    <button onclick="editUser('${user.email}')">Edit</button>
-                    <button>Delete</button>
-                </td>
-            </tr>
-        `
-    }
-    tableUsers.innerHTML = newTR
+    console.log("bawah fetch!!");
+
+    var newTr2 = userList.map((user, index) => {
+        return `
+                <tr>
+                    <td align="right">${index + 1}</td>
+                    <td>${user.name}</td>
+                    <td>
+                        ${(user.gender == "L") ? "Laki-laki" : (user.gender == "P" ? "Perempuan" : "")}
+                    </td>
+                    <td align="center">
+                        <button onclick="editUser('${user.email}')">Edit</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            `
+    })
+    // console.log("newTr2: ", newTr2);
+
+    tableUsers.innerHTML = newTR + newTr2.join("")
 }
 
 var editUser = function (email) {
@@ -213,46 +229,16 @@ var init = function () {
 init()
 
 
-function a(param1, param2, cb) {
-    let s = param1 + param2
-    // logic
-    return cb(s, param2)
-    // return param1 + param2
-}
+const promiseA = new Promise((resolve, reject) => {
+    // resolutionFunc(777);
+    var a = 1 + 1
 
+    setTimeout(() => resolve(a), 10000)
 
-var c = (param1, param2) => {
-    return param1 + param2
-}
-
-
-const result = userList.filter((val, idx) => val.gender == "P")
-console.warn(result)
-
-const resultMap = userList.map((val, idx) => {
-    if (val.name == "admin") {
-        return "admin"
-    }
-
-    return {
-        name: val.name,
-        gender: val.gender == "L" ? "Laki-laki" : "Perempuan",
-        email: val.email + ".com"
-    }
-})
-console.log(resultMap);
-
-const resultRed = userList.reduce((ret, data) => ret + data.age, 0)
-console.log(resultRed);
-
-let total = 0
-userList.forEach(val => {
-    console.warn(val)
-    total += val.age
-})
-console.log(total);
-
-/*
-    Tugas:
-        - Ganti metode2 yang kalian gunakan (for) menggunakan reduce/filter/map/find
-*/
+    // if (a == 2) resolve(a)
+    // else reject("Salah")
+});
+// At this point, "promiseA" is already settled.
+promiseA.then((val) => console.log("asynchronous logging has val:", val));
+promiseA.catch(err => console.warn("PromiseA err:", err))
+console.log("immediate logging");
