@@ -140,40 +140,91 @@ var doLogout = function () {
     get(".navbar-list[content='masuk']").classList.remove("hidden")
 }
 
-var renderHome = async function () {
+var renderHome = async () => {
     var tableUsers = get("table[data='user']")
     var newTR = get("table[data='user'] tr").innerHTML
 
-    console.log("atas fetch");
     await fetch('https://jsonplaceholder.typicode.com/users')
         .then(response => response.json())
         .then(data => {
             userList = data
-            console.log("dalam then");
+            console.info("userList: ", userList)
         })
         .catch(err => console.warn("err: ", err))
         .finally(() => console.info("finally..."))
 
-    console.log("bawah fetch!!");
+    console.warn("userList: ", userList)
+    pagination(1)
+    paginationButton()
+    // var newTr2 = userList.map((user, index) => {
+    //     if (index < 2) {
+    //         return `
+    //                 <tr>
+    //                     <td align="right">${index + 1}</td>
+    //                     <td>${user.name}</td>
+    //                     <td>
+    //                         ${(user.gender == "L") ? "Laki-laki" : (user.gender == "P" ? "Perempuan" : "")}
+    //                     </td>
+    //                     <td align="center">
+    //                         <button onclick="editUser('${user.email}')">Edit</button>
+    //                         <button>Delete</button>
+    //                     </td>
+    //                 </tr>
+    //             `
+    //     }
+    // })
 
-    var newTr2 = userList.map((user, index) => {
+    // tableUsers.innerHTML = newTR + newTr2.join("")
+}
+
+var pagination = (page) => {
+    // console.log("pagination")
+    // console.info(userList.slice(0, 2)) // page = 1 (n -1) * 2
+    // console.info(userList.slice(2, 4)) // page = 2
+    // console.info(userList.slice(4, 6)) // page = 3
+    // console.info(userList.slice(6, 8)) // page = 4
+
+    const rowPerPage = 2
+    let header = get("table[data='user'] tr:first-child").innerHTML
+    let table = get("table[data='user']")
+
+    // row per page = 2
+    // page 1 = 0, 1
+    // page 2 = 2, 3
+    // page 3 = 4, 5
+
+    let no = ((page - 1) * 2) + 1
+    var newTr2 = userList.slice((page - 1) * 2, page * rowPerPage).map((user, index) => {
         return `
-                <tr>
-                    <td align="right">${index + 1}</td>
-                    <td>${user.name}</td>
-                    <td>
-                        ${(user.gender == "L") ? "Laki-laki" : (user.gender == "P" ? "Perempuan" : "")}
-                    </td>
-                    <td align="center">
-                        <button onclick="editUser('${user.email}')">Edit</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-            `
+            <tr>
+                <td align="right">${no++}</td>
+                <td>${user.name}</td>
+                <td>
+                    ${(user.gender == "L") ? "Laki-laki" : (user.gender == "P" ? "Perempuan" : "")}
+                </td>
+                <td align="center">
+                    <button onclick="editUser('${user.email}')">Edit</button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+        `
     })
-    // console.log("newTr2: ", newTr2);
 
-    tableUsers.innerHTML = newTR + newTr2.join("")
+    table.innerHTML = header + newTr2.join("")
+}
+
+var paginationButton = () => {
+    const rowPerPage = 2
+    const totalUsers = userList.length
+    const totalButtonPage = Math.ceil(totalUsers / rowPerPage)
+
+    get('.page-container').innerHTML = `<div class="page-no" onclick="pagination(1)">First</div>`
+    for (let i = 1; i <= totalButtonPage; i++) {
+        get('.page-container').innerHTML += `
+            <div class="page-no" onclick="pagination(${i})">${i}</div>
+        `
+    }
+    get('.page-container').innerHTML += `<div class="page-no" onclick="pagination(${totalButtonPage})">Last</div>`
 }
 
 var editUser = function (email) {
@@ -222,6 +273,13 @@ var init = function () {
     var buttonReg = get("#buttonLogin")
     buttonReg.addEventListener("click", doLogin)
 
+    // add event to pagination no
+    // var buttonPage = getAll(".page-no")
+    // for (i = 0; i < buttonPage.length; i++) {
+    //     var element = buttonPage[i];
+    //     element.setAttribute("onclick", `pagination(${i + 1})`)
+    // }
+
 
     showPage("home")
 }
@@ -235,10 +293,11 @@ const promiseA = new Promise((resolve, reject) => {
 
     setTimeout(() => resolve(a), 10000)
 
-    // if (a == 2) resolve(a)
-    // else reject("Salah")
+    if (a == 2) resolve(a)
+    else reject("Salah")
 });
 // At this point, "promiseA" is already settled.
 promiseA.then((val) => console.log("asynchronous logging has val:", val));
 promiseA.catch(err => console.warn("PromiseA err:", err))
+promiseA.finally(() => console.log("Finally.."))
 console.log("immediate logging");

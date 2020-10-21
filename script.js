@@ -139,6 +139,10 @@ function showData(e) {
         // var td2 = document.createElement("td")
         // var td3 = document.createElement("td")
 
+        // var button = document.createElement("button")
+        // button.innerHTML = Next
+        // document.querySelector("div.paging").appendChild(button)
+
         // td1.innerHTML = index + 1
         // td2.innerHTML = user.nama
         // td3.innerHTML = user.umur
@@ -147,8 +151,9 @@ function showData(e) {
         // tr1.appendChild(td2)
         // tr1.appendChild(td3)
 
-        // ==== cara 2
         // tableData.appendChild(tr1)
+
+        // ==== cara 2
         // tr += "<tr>" +
         //     "<td>" + (index + 1) + "</td>" +
         //     "<td>" + user.nama + "</td>" +
