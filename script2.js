@@ -144,7 +144,7 @@ var renderHome = async () => {
     var tableUsers = get("table[data='user']")
     var newTR = get("table[data='user'] tr").innerHTML
 
-    await fetch('https://jsonplaceholder.typicode.com/users')
+    await fetch('https://jsonplaceholder.typicode.com/comments')
         .then(response => response.json())
         .then(data => {
             userList = data
@@ -155,7 +155,7 @@ var renderHome = async () => {
 
     console.warn("userList: ", userList)
     pagination(1)
-    paginationButton()
+
     // var newTr2 = userList.map((user, index) => {
     //     if (index < 2) {
     //         return `
@@ -184,17 +184,18 @@ var pagination = (page) => {
     // console.info(userList.slice(4, 6)) // page = 3
     // console.info(userList.slice(6, 8)) // page = 4
 
-    const rowPerPage = 2
+    const rowPerPage = 10
     let header = get("table[data='user'] tr:first-child").innerHTML
     let table = get("table[data='user']")
 
-    // row per page = 2
-    // page 1 = 0, 1
-    // page 2 = 2, 3
-    // page 3 = 4, 5
+    // row per page = 10
+    // page 1 = 0, 9   1
+    // page 2 = 10, 19 2
+    // page 3 = 20, 29 3
 
-    let no = ((page - 1) * 2) + 1
-    var newTr2 = userList.slice((page - 1) * 2, page * rowPerPage).map((user, index) => {
+    let no = ((page - 1) * 10)+1
+
+    var newTr2 = userList.slice(((page - 1)*rowPerPage), (page * rowPerPage)).map((user, index) => {
         return `
             <tr>
                 <td align="right">${no++}</td>
@@ -209,22 +210,44 @@ var pagination = (page) => {
             </tr>
         `
     })
-
+    paginationButton(page)
     table.innerHTML = header + newTr2.join("")
+
 }
 
-var paginationButton = () => {
-    const rowPerPage = 2
+var paginationButton = page => {
+    const rowPerPage = 10
     const totalUsers = userList.length
     const totalButtonPage = Math.ceil(totalUsers / rowPerPage)
-
-    get('.page-container').innerHTML = `<div class="page-no" onclick="pagination(1)">First</div>`
-    for (let i = 1; i <= totalButtonPage; i++) {
-        get('.page-container').innerHTML += `
+    let akhir
+       if (page>=10){
+        //    page 12 = awal->-5, akhir+4/ max 50
+           akhir=((page+4)>totalButtonPage)?totalButtonPage:page+4
+            get('.page-container').innerHTML = `<div class="page-no" onclick="pagination(1)">First</div>`
+            for (let i = page-5; i <= akhir; i++) {
+        if (i==page){
+            get('.page-container').innerHTML += `
+            <div class="page-no" style="background-color: aqua" onclick="pagination(${i})">${i}</div>
+        `
+        } else {
+            get('.page-container').innerHTML += `
             <div class="page-no" onclick="pagination(${i})">${i}</div>
         `
-    }
-    get('.page-container').innerHTML += `<div class="page-no" onclick="pagination(${totalButtonPage})">Last</div>`
+        }
+            }
+            get('.page-container').innerHTML += `<div class="page-no" onclick="pagination(${totalButtonPage})">Last</div>`
+        } else {
+            get('.page-container').innerHTML = `<div class="page-no" onclick="pagination(1)">First</div>`
+            for (let i = 1; i <= rowPerPage; i++) {
+                get('.page-container').innerHTML += `
+            <div class="page-no" onclick="pagination(${i})">${i}</div>
+        `
+            }
+            get('.page-container').innerHTML += `<div class="page-no" onclick="pagination(${totalButtonPage})">Last</div>`
+           getAll('.page-no')[page].style.backgroundColor="aqua"
+        }
+       // getAll('.page-no')[page].style.backgroundColor="aqua"
+    console.log(getAll('.page-no'))
 }
 
 var editUser = function (email) {
